@@ -1,25 +1,27 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Tombol "Take a Test"
-    document.querySelector('.start-button').addEventListener('click', () => {
-        alert('Starting the AI-Powered MBTI Test...');
+    // Initialize carousel immediately
+    initializeCarousel();
+
+    // Hamburger Menu
+    const hamburger = document.querySelector('.hamburger');
+    const navLinks = document.querySelector('.nav-links');
+
+    hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('active');
+        navLinks.classList.toggle('active');
     });
 
-    // Initialize carousel on mobile devices
-    if (window.innerWidth <= 767) {
-        initializeCarousel();
-    }
+    // Close menu when clicking a link
+    document.querySelectorAll('.nav-links li a').forEach(link => {
+        link.addEventListener('click', () => {
+            hamburger.classList.remove('active');
+            navLinks.classList.remove('active');
+        });
+    });
 
-    // Reinitialize carousel on resize (e.g., orientation change)
-    window.addEventListener('resize', function() {
-        if (window.innerWidth <= 767) {
-            initializeCarousel();
-        } else {
-            // Reset transform on desktop
-            const features = document.querySelector('.features');
-            if (features) {
-                features.style.transform = 'translateX(0)';
-            }
-        }
+    // Start button
+    document.querySelector('.start-button').addEventListener('click', () => {
+        alert('Starting the AI-Powered MBTI Test...');
     });
 });
 
@@ -28,62 +30,117 @@ function initializeCarousel() {
     const cards = document.querySelectorAll('.feature-card');
     const leftArrow = document.querySelector('.carousel-arrow-left');
     const rightArrow = document.querySelector('.carousel-arrow-right');
-
-    // If there are no cards or arrows, exit
-    if (cards.length === 0 || !leftArrow || !rightArrow || !features) return;
-
     let currentCardIndex = 0;
+    let isTransitioning = false;
 
-    // Function to update carousel position
+    // Only initialize if we have the necessary elements
+    if (!features || !leftArrow || !rightArrow || cards.length === 0) return;
+
     function updateCarousel() {
-        // Each card takes 85% width + 7.5% margin on each side = 100% total width per card
-        const offset = -currentCardIndex * 100; // Move by 100% of the container width
+        if (isTransitioning) return;
+        isTransitioning = true;
+
+        // Update transform for sliding
+        const offset = -currentCardIndex * 100;
         features.style.transform = `translateX(${offset}%)`;
+
+        // Update active states
+        cards.forEach((card, index) => {
+            if (index === currentCardIndex) {
+                card.classList.add('active');
+                card.style.opacity = '1';
+            } else {
+                card.classList.remove('active');
+                card.style.opacity = '0.5';
+            }
+        });
+
+        // Update arrow states
+        leftArrow.style.opacity = currentCardIndex === 0 ? '0.5' : '1';
+        rightArrow.style.opacity = currentCardIndex === cards.length - 1 ? '0.5' : '1';
+        leftArrow.style.pointerEvents = currentCardIndex === 0 ? 'none' : 'auto';
+        rightArrow.style.pointerEvents = currentCardIndex === cards.length - 1 ? 'none' : 'auto';
+
+        // Reset transition flag after animation
+        setTimeout(() => {
+            isTransitioning = false;
+        }, 300);
     }
 
     // Arrow click handlers
     leftArrow.addEventListener('click', function() {
-        if (currentCardIndex > 0) {
+        if (!isTransitioning && currentCardIndex > 0) {
             currentCardIndex--;
-        } else {
-            currentCardIndex = cards.length - 1; // Loop to the last card
+            updateCarousel();
         }
-        updateCarousel();
     });
 
     rightArrow.addEventListener('click', function() {
-        if (currentCardIndex < cards.length - 1) {
+        if (!isTransitioning && currentCardIndex < cards.length - 1) {
             currentCardIndex++;
-        } else {
-            currentCardIndex = 0; // Loop to the first card
+            updateCarousel();
         }
-        updateCarousel();
     });
 
-    // Add touch swipe functionality
+    // Touch handling
     let touchStartX = 0;
-    let touchEndX = 0;
+    let touchStartY = 0;
 
     features.addEventListener('touchstart', function(e) {
-        touchStartX = e.changedTouches[0].screenX;
-    }, false);
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+    }, { passive: true });
 
     features.addEventListener('touchend', function(e) {
-        touchEndX = e.changedTouches[0].screenX;
-        handleSwipe();
-    }, false);
+        if (isTransitioning) return;
 
-    function handleSwipe() {
-        if (touchEndX < touchStartX - 50) {
-            // Swipe left, show next card
-            rightArrow.click();
+        const touchEndX = e.changedTouches[0].clientX;
+        const touchEndY = e.changedTouches[0].clientY;
+        
+        const deltaX = touchEndX - touchStartX;
+        const deltaY = Math.abs(touchEndY - touchStartY);
+
+        // Only handle horizontal swipes
+        if (deltaY < 50 && Math.abs(deltaX) > 50) {
+            if (deltaX > 0 && currentCardIndex > 0) {
+                // Swipe right
+                currentCardIndex--;
+                updateCarousel();
+            } else if (deltaX < 0 && currentCardIndex < cards.length - 1) {
+                // Swipe left
+                currentCardIndex++;
+                updateCarousel();
+            }
         }
-        if (touchEndX > touchStartX + 50) {
-            // Swipe right, show previous card
-            leftArrow.click();
-        }
+    }, { passive: true });
+
+    // Handle window resize
+    let resizeTimer;
+    window.addEventListener('resize', function() {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(function() {
+            if (window.innerWidth > 768) {
+                // Reset for desktop view
+                features.style.transform = '';
+                leftArrow.style.display = 'none';
+                rightArrow.style.display = 'none';
+                cards.forEach(card => {
+                    card.classList.remove('active');
+                    card.style.opacity = '1';
+                });
+            } else {
+                // Reset for mobile view
+                leftArrow.style.display = 'block';
+                rightArrow.style.display = 'block';
+                updateCarousel();
+            }
+        }, 250);
+    });
+
+    // Initial setup
+    if (window.innerWidth <= 768) {
+        updateCarousel();
+    } else {
+        cards.forEach(card => card.style.opacity = '1');
     }
-
-    // Initial update
-    updateCarousel();
 }
