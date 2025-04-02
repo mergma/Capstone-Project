@@ -88,6 +88,63 @@ nav ul li a:hover::after {
     width: 100%;
 }
 
+/* Hamburger Menu */
+.hamburger {
+    display: none;
+    cursor: pointer;
+}
+
+.hamburger span {
+    display: block;
+    width: 25px;
+    height: 3px;
+    margin: 5px;
+    background-color: var(--text-color);
+    transition: var(--transition);
+}
+
+@media (max-width: 768px) {
+    .hamburger {
+        display: block;
+        z-index: 101;
+    }
+
+    .nav-links {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 70%;
+        height: 100vh;
+        background: var(--white);
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        transition: var(--transition);
+        box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .nav-links.active {
+        right: 0;
+    }
+
+    nav ul li {
+        margin: 20px 0;
+    }
+
+    /* Hamburger Animation */
+    .hamburger.active span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    .hamburger.active span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .hamburger.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(7px, -6px);
+    }
+}
+
 /* Header Section */
 header {
     text-align: center;
@@ -150,6 +207,9 @@ h1 {
     right: 50%;
     margin-left: -50vw;
     margin-right: -50vw;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
 }
 
 .features {
@@ -160,6 +220,102 @@ h1 {
     gap: 40px;
     padding: 0 20px;
     position: relative;
+}
+
+@media (max-width: 768px) {
+    .features-section {
+        padding: 20px;
+        position: relative;
+        overflow: hidden;
+        width: 100%;
+        min-height: 400px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .features {
+        display: flex !important;
+        position: relative;
+        transition: transform 0.3s ease;
+        width: 100%;
+        max-width: 500px;
+        margin: 0 auto;
+        padding: 0;
+        gap: 0 !important;
+        grid-template-columns: none !important;
+    }
+
+    .feature-card {
+        flex: 0 0 100%;
+        width: 100%;
+        max-width: 100%;
+        margin: 0;
+        padding: 2rem;
+        background: var(--white);
+        border-radius: 15px;
+        text-align: center;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        transform: scale(0.95);
+        opacity: 0.5;
+        transition: all 0.3s ease;
+    }
+
+    .feature-card.active {
+        transform: scale(1);
+        opacity: 1;
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+    }
+
+    .feature-card h3 {
+        color: var(--primary-color);
+        font-size: 1.8rem;
+        margin-bottom: 1rem;
+        font-weight: bold;
+    }
+
+    .feature-card p {
+        color: var(--text-color);
+        font-size: 1.1rem;
+        line-height: 1.5;
+        margin: 0;
+    }
+
+    .carousel-arrow {
+        display: block;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 10;
+        width: 40px;
+        height: 40px;
+        background: var(--white);
+        border: none;
+        border-radius: 50%;
+        font-size: 1.2rem;
+        color: var(--primary-color);
+        cursor: pointer;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .carousel-arrow:hover {
+        background: var(--primary-color);
+        color: var(--white);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+        transform: translateY(-50%) scale(1.05);
+    }
+
+    .carousel-arrow-left {
+        left: 5px;
+    }
+
+    .carousel-arrow-right {
+        right: 5px;
+    }
 }
 
 /* Carousel Styles */
@@ -459,8 +615,8 @@ footer::after {
     }
 
     nav ul li a {
-        font-size: 0.9rem;
-        font-weight: normal;
+        font-size: 1.5rem;
+        font-weight: bold;
     }
 
     nav ul li a::after {
@@ -501,17 +657,10 @@ footer::after {
         margin-right: -50vw;
     }
 
-    .features {
-        display: flex;
-        overflow: hidden;
-        padding: 0;
-        transition: transform 0.5s ease-in-out;
-    }
-
     .feature-card {
-        flex: 0 0 85%; /* Each card takes 85% of the container width */
-        margin: 0 7.5%; /* Center the card with equal margins on both sides */
-        padding: 25px;
+        flex: 0 0 80%; 
+        margin: 0 3.2rem; 
+        padding: 10px;
         min-height: 150px;
         border-radius: 10px;
         box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
