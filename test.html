@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MBTI Test</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=K2D:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav>
+        <div class="logo"></div>
+        <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="#">What is MBTI</a></li>
+            <li><a href="#">MBTI Types</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <div class="test-form">
+            <div class="test-step" id="user-info">
+                <h2>Before we start...</h2>
+                <form id="userForm">
+                    <div class="form-group">
+                        <label for="name">Your Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="age">Your Age</label>
+                        <input type="number" id="age" name="age" min="15" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="gender">Gender</label>
+                        <select id="gender" name="gender" required>
+                            <option value="">Select gender</option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="start-test-btn">Start Test</button>
+                </form>
+            </div>
+
+            <div class="test-step" id="questions" style="display: none;">
+                <div class="progress-bar">
+                    <div class="progress"></div>
+                </div>
+                <div class="question-container">
+                    <h3 class="question-number">Question 1/5</h3>
+                    <p class="question-text"></p>
+                    <div class="options">
+                      
+                    </div>
+                    <div class="navigation-buttons">
+                        <button class="prev-btn" disabled>Previous</button>
+                        <button class="next-btn">Next</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="test.js"></script>
+</body>
+</html>
