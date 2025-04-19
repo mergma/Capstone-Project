@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>DeepMBTI - Personality Prediction via Writing</title>
+  <meta name="description" content="Predict Myers-Briggs personality types using AI and sample writing input." />
+  <meta name="keywords" content="MBTI, Personality, Machine Learning, Natural Language Processing, Psychology, AI, Deep Learning" />
+
+  <link rel="icon" href="{{ url_for('static', filename='images/favicon-32x32.png') }}" />
+  <link rel="apple-touch-icon" href="{{ url_for('static', filename='images/apple-touch-icon.png') }}" />
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='icofont/icofont.min.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+
+<body>
+  <!-- ======= Header ======= -->
+  <header id="header" class="fixed-top">
+    <div class="container d-flex align-items-center justify-content-between">
+      <h1 class="logo"><a href="/" style="color: #4CAF50;">DeepMBTI</a></h1>
+    </div>
+  </header>
+
+  <!-- ======= Hero Section ======= -->
+  <section id="hero" class="d-flex align-items-center bg-light">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 d-flex flex-column justify-content-center pt-5">
+          <h1>Discover Your MBTI Personality Through Writing</h1>
+          <p>DeepMBTI uses AI and Natural Language Processing to predict your MBTI based on your writing style, not your quiz answers.</p>
+        </div>
+        <div class="col-lg-6">
+          <form action="{{ url_for('predict') }}" method="POST">
+            <textarea name="text" class="form-control" placeholder="Paste your writing sample here (minimum 150 characters)..." rows="10" minlength="150" required></textarea>
+            <br />
+            <input type="submit" class="btn btn-block" style="background-color: #4CAF50; color: white;"value="Predict Personality" />
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======= Output Section ======= -->
+  <section id="result" class="py-5 text-center bg-white">
+    <div class="container">
+      <h2 class="mb-3">Prediction Result</h2>
+      <h3 class="outputUser" style="font-size: 48px;"><strong>{{ prediction_text }}</strong></h3>
+    </div>
+  </section>
+
+  <!-- ======= About MBTI ======= -->
+  <section id="about-mbti" class="about section-bg py-5">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-6">
+          <img src="{{ url_for('static', filename='images/pixel-cells-3947913_960_720.png') }}" class="img-fluid" alt="MBTI image" />
+        </div>
+        <div class="col-lg-6">
+          <h3><strong>What is MBTI?</strong></h3>
+          <p>The Myers-Briggs Type Indicator (MBTI) categorizes psychological types based on Carl Jung's theories, grouping them into 16 personality types using 4 dimensions.</p>
+          <p>While it’s widely used in workplaces and counseling, MBTI is often criticized for its lack of scientific rigor and is considered a pseudoscience.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======= MBTI Dimensions ======= -->
+  <section id="dimensions" class="py-5">
+    <div class="container">
+      <div class="text-center mb-5">
+        <h2>MBTI Dimensions</h2>
+        <p>Each MBTI type is a combination of 4 out of 8 traits:</p>
+      </div>
+      <div class="row text-center">
+        <div class="col-md-3">
+          <i class="icofont-users-social icon mb-2"></i>
+          <h5>Extraversion vs Introversion</h5>
+          <p>Do you focus on the outer world or your inner world?</p>
+        </div>
+        <div class="col-md-3">
+          <i class="icofont-listening icon mb-2"></i>
+          <h5>Sensing vs Intuition</h5>
+          <p>Do you trust your senses or look for patterns?</p>
+        </div>
+        <div class="col-md-3">
+          <i class="icofont-heart icon mb-2"></i>
+          <h5>Thinking vs Feeling</h5>
+          <p>Do you decide with logic or emotion?</p>
+        </div>
+        <div class="col-md-3">
+          <i class="icofont-eye icon mb-2"></i>
+          <h5>Judging vs Perceiving</h5>
+          <p>Do you prefer structure or flexibility?</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======= Why DeepMBTI Section ======= -->
+  <section id="why" class="about section-bg py-5">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-6 order-2 order-lg-1">
+          <h3><strong>Why DeepMBTI is Different</strong></h3>
+          <p>Most MBTI assessments are biased by user perception. DeepMBTI reduces this bias by using your natural language sample — what you wrote before knowing you're being analyzed.</p>
+          <p>This AI-based approach makes personality prediction more reflective of your actual behavior, not how you think you should behave.</p>
+        </div>
+        <div class="col-lg-6 order-1 order-lg-2">
+          <img src="{{ url_for('static', filename='images/pixel-cells-3974186_960_720.png') }}" class="img-fluid" alt="AI personality analysis" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======= Famous MBTI Personalities ======= -->
+  <section id="examples" class="py-5 text-center">
+    <div class="container">
+      <h2>Famous MBTI Types</h2>
+      <p>Here are some popular personalities and their supposed MBTI types:</p>
+      <ul class="list-unstyled">
+        <li><strong>INTJ</strong> – Elon Musk</li>
+        <li><strong>INFP</strong> – William Shakespeare</li>
+        <li><strong>ENFP</strong> – Robin Williams</li>
+        <li><strong>ISTJ</strong> – Natalie Portman</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ======= Back to Top ======= -->
+  <a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
+
+  <!-- ======= JavaScript ======= -->
+  <script src="{{ url_for('static', filename='main.js') }}"></script>
+</body>
+</html>
