@@ -1,0 +1,35 @@
+:root {
+  --primary-color: #4CAF50;
+  --primary-light: #66BB6A;
+  --primary-dark: #2E7D32;
+  --text-color: #333;
+  --text-light: #666;
+  --white: #ffffff;
+  --light-bg: #f0f7f4;
+}
+
+/* Make Bootstrap buttons use our custom green color */
+.btn-primary {
+  background-color: #4CAF50 !important;
+  border-color: #4CAF50 !important;
+}
+
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active {
+  background-color: #2E7D32 !important;
+  border-color: #2E7D32 !important;
+}
+
+.btn-outline-primary {
+  color: #4CAF50 !important;
+  border-color: #4CAF50 !important;
+}
+
+.btn-outline-primary:hover, .btn-outline-primary:focus, .btn-outline-primary:active {
+  background-color: #4CAF50 !important;
+  color: white !important;
+}
+
+/* Override Bootstrap's default blue focus ring */
+.btn:focus, .btn.focus {
+  box-shadow: 0 0 0 0.2rem rgba(76, 175, 80, 0.25) !important;
+}
